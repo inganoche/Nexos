@@ -14,6 +14,10 @@ namespace Nexos.Infrastructure.Mappings
             CreateMap<Book, BookDto>();
             CreateMap<BookDto, Book>();
 
+   
+            CreateMap<Book, BookDtoOut>().ForMember(d=> d.NameAuthor, opt=> opt.MapFrom(x=> x.Author.FullName))
+                .ForMember(d => d.NameEditorial, opt => opt.MapFrom(x => x.Editorial.Name)); ;
+
             CreateMap<AuthorDto, Author>();
             CreateMap<Author, AuthorDto>();
 

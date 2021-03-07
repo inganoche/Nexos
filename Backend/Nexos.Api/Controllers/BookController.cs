@@ -9,10 +9,12 @@ using Nexos.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Nexos.Api.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class BookController : ControllerBase
@@ -25,16 +27,26 @@ namespace Nexos.Api.Controllers
             mapper = _mapper;
         }
 
+        /// <summary>
+        /// Retorna todos los libros
+        /// </summary>
+        /// <returns>Todos los libros</returns>
         [HttpGet]
         public async Task<IActionResult> GetBooks()
         {
             var books = await bookService.GetBooks();
-            var booksDto = mapper.Map<IEnumerable<BookDto>>(books);
-            var response = new ResponseApi<IEnumerable< BookDto>>(booksDto);
+            var BooksDtoOut = mapper.Map<IEnumerable<BookDtoOut>>(books);
+            var response = new ResponseApi<IEnumerable<BookDtoOut>>(BooksDtoOut);
             return Ok(response);
         }
-
+        /// <summary>
+        /// Retorna un libro específico
+        /// </summary>
+        /// <param name="id">Código del libro</param>
+        /// <returns>Un libro</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ResponseApi<BookDto>))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetBook(int id)
         {
             var book = await bookService.GetBook(id);
@@ -42,8 +54,14 @@ namespace Nexos.Api.Controllers
             var response = new ResponseApi<BookDto>(bookDto);
             return Ok(response);
         }
-
+        /// <summary>
+        /// Inserta un libro
+        /// </summary>
+        /// <param name="model">Modelos tipo libro</param>
+        /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ResponseApi<BookDto>))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult> Post(BookDto model)
         {
             var book = mapper.Map<Book>(model);
@@ -58,7 +76,7 @@ namespace Nexos.Api.Controllers
         {
             var book = mapper.Map<Book>(model);
             book.Id = id;
-           var result =  await bookService.UpdateBook(book);
+            var result = await bookService.UpdateBook(book);
             var response = new ResponseApi<bool>(result);
             return Ok(response);
         }
@@ -66,7 +84,7 @@ namespace Nexos.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-           var result =  await bookService.DeleteBook(id);
+            var result = await bookService.DeleteBook(id);
             var response = new ResponseApi<bool>(result);
             return Ok(response);
         }

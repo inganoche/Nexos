@@ -37,6 +37,8 @@ namespace Nexos.Service.Sevices
             try
             {
                 return await bookRepository.GetBooks();
+
+
             }
             catch (Exception ex)
             {

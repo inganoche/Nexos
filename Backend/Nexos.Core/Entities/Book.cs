@@ -20,12 +20,14 @@ namespace Nexos.Core.Entities
         public string Gender { get; set; }
         public int PageNumber { get; set; }
         public int MyProperty { get; set; }
-        [ForeignKey("IdEditorial")]
+
         public int IdEditorial { get; set; }
-        [ForeignKey("IdAuthor")]
+   
         public int IdAuthor { get; set; }
-        public virtual Author Author { get; set; }
-        public virtual Editorial Editorial { get; set; }
+        [ForeignKey("IdAuthor")]
+        public  Author Author { get; set; }
+        [ForeignKey("IdEditorial")]
+        public  Editorial Editorial { get; set; }
 
     }
 }

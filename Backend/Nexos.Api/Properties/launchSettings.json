@@ -20,7 +20,6 @@
     "Nexos.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/book",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -20,7 +20,7 @@ namespace Nexos.Infrastructure.Repositories
 
         public async Task<IEnumerable<Book>> GetBooks()
         {
-            var books = await dbc.Book.ToListAsync();
+            var books = await dbc.Book.Include(a=> a.Author).Include(e=> e.Editorial).ToListAsync();
             return books;
         }
 

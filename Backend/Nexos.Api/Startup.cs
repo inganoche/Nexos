@@ -20,6 +20,8 @@ using FluentValidation.AspNetCore;
 using Nexos.Service.Interfaces;
 using Nexos.Service.Sevices;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.IO;
 
 namespace Nexos.Api
 {
@@ -61,6 +63,9 @@ namespace Nexos.Api
 
             services.AddSwaggerGen(swg=> {
                 swg.SwaggerDoc("v01", new OpenApiInfo { Title="Project Nexos API Books", Version="v01" });
+                var file = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var fileP = Path.Combine(AppContext.BaseDirectory, file);
+                swg.IncludeXmlComments(fileP);
             });
 
 
@@ -90,6 +95,7 @@ namespace Nexos.Api
             app.UseSwagger();
             app.UseSwaggerUI(sw=> {
                 sw.SwaggerEndpoint("/swagger/v01/swagger.json","Nexos API Book");
+                sw.RoutePrefix = string.Empty;
             });
 
             app.UseRouting();

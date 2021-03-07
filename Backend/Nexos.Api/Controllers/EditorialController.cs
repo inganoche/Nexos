@@ -9,10 +9,12 @@ using Nexos.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Nexos.Api.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class EditorialController : ControllerBase
@@ -24,8 +26,13 @@ namespace Nexos.Api.Controllers
             EditorialService = _EditorialService;
             mapper = _mapper;
         }
-
+        /// <summary>
+        /// Retorna todos las editoriales 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ResponseApi<IEnumerable<EditorialDto>>))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetEditorials()
         {
             var Editorials = await EditorialService.GetEditorials();
@@ -33,7 +40,11 @@ namespace Nexos.Api.Controllers
             var response = new ResponseApi<IEnumerable< EditorialDto>>(EditorialsDto);
             return Ok(response);
         }
-
+        /// <summary>
+        /// Retorna una editorial
+        /// </summary>
+        /// <param name="id">Código de la editorial</param>
+        /// <returns>Una editorial</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEditorial(int id)
         {

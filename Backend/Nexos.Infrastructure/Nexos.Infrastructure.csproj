@@ -36,8 +36,4 @@
     <ProjectReference Include="..\Nexos.Core\Nexos.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
