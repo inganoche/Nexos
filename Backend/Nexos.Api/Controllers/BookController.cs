@@ -36,8 +36,8 @@ namespace Nexos.Api.Controllers
         {
             var books = await bookService.GetBooks();
             var BooksDtoOut = mapper.Map<IEnumerable<BookDtoOut>>(books);
-            var response = new ResponseApi<IEnumerable<BookDtoOut>>(BooksDtoOut);
-            return Ok(response);
+            //var response = new ResponseApi<IEnumerable<BookDtoOut>>(BooksDtoOut);
+            return Ok(BooksDtoOut);
         }
         /// <summary>
         /// Retorna un libro específico

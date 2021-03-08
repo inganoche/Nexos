@@ -89,9 +89,10 @@ namespace Nexos.Api
                 app.UseDeveloperExceptionPage();
             }
 
+
             SeedNexos.SeedNexosServerData(app);
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseSwagger();
             app.UseSwaggerUI(sw=> {
                 sw.SwaggerEndpoint("/swagger/v01/swagger.json","Nexos API Book");
